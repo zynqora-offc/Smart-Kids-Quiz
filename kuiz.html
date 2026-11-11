@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🌈 Kuis Ceria – Petualangan Belajar Anak SD</title>
+<style>
+:root{--ink:#3b2f63;--blue:#bfe3ff;--purple:#dccbff;--pink:#ffd0e6;--yellow:#fff1a8;--green:#c4f2cf;--bad:#ffb8b8;--bg:#eef6ff}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{min-height:100%}
+body{font-family:"Baloo 2","Chalkboard SE","Comic Sans MS","Comic Neue","Trebuchet MS",system-ui,sans-serif;color:var(--ink);background:
+radial-gradient(circle at 10% 15%,var(--pink) 0 90px,transparent 91px),
+radial-gradient(circle at 92% 20%,var(--yellow) 0 70px,transparent 71px),
+radial-gradient(circle at 85% 88%,var(--purple) 0 110px,transparent 111px),
+radial-gradient(circle at 8% 90%,var(--green) 0 80px,transparent 81px),var(--bg);
+background-attachment:fixed;display:flex;justify-content:center;padding:14px;font-size:18px}
+#app{width:100%;max-width:640px;position:relative}
+.screen{display:none;animation:pop .45s cubic-bezier(.2,1.4,.5,1)}
+.screen.on{display:block}
+@keyframes pop{from{opacity:0;transform:scale(.92) translateY(14px)}to{opacity:1;transform:none}}
+.card{background:#fff;border:4px solid var(--ink);border-radius:28px;box-shadow:8px 8px 0 var(--ink);padding:22px 18px;text-align:center}
+.logo{display:inline-block;background:var(--yellow);border:3px solid var(--ink);border-radius:999px;padding:6px 18px;font-weight:800;font-size:1.05rem;box-shadow:4px 4px 0 var(--ink);transform:rotate(-2deg)}
+h1{font-size:clamp(1.9rem,8vw,2.8rem);line-height:1.1;margin:16px 0 8px;font-weight:800}
+h1 span{display:inline-block;animation:wave 2.4s ease-in-out infinite}
+h1 span:nth-child(2){animation-delay:.3s}
+@keyframes wave{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+p.desc{margin:6px auto 14px;max-width:460px;line-height:1.4}
+.crew{display:flex;justify-content:center;gap:6px;margin:10px 0 6px;flex-wrap:wrap}
+.crew b{font-size:clamp(2.6rem,13vw,4rem);display:inline-block;animation:bob 2s ease-in-out infinite;font-weight:400}
+.crew b:nth-child(2){animation-delay:.25s}.crew b:nth-child(3){animation-delay:.5s}.crew b:nth-child(4){animation-delay:.75s}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-12px) rotate(4deg)}}
+.chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:12px 0}
+.chip{border:3px solid var(--ink);border-radius:16px;padding:6px 12px;font-weight:700;font-size:.95rem}
+.chip:nth-child(1){background:var(--blue)}.chip:nth-child(2){background:var(--green)}.chip:nth-child(3){background:var(--pink)}
+.btn{font:inherit;font-weight:800;font-size:1.2rem;color:var(--ink);background:var(--yellow);border:4px solid var(--ink);border-radius:22px;padding:12px 26px;cursor:pointer;box-shadow:0 6px 0 var(--ink);transition:transform .1s,box-shadow .1s;margin:6px 4px}
+.btn:hover{background:#ffe874}
+.btn:active{transform:translateY(5px);box-shadow:0 1px 0 var(--ink)}
+.btn.big{font-size:1.5rem;padding:14px 34px;animation:pulse 1.6s infinite}
+.btn.alt{background:var(--blue)}
+.btn.next{background:var(--green)}
+.btn:focus-visible,.opt:focus-visible{outline:4px solid #7a5cff;outline-offset:3px}
+@keyframes pulse{50%{transform:scale(1.06)}}
+.best{margin-top:14px;font-weight:700}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;font-weight:800}
+.pill{background:#fff;border:3px solid var(--ink);border-radius:999px;padding:4px 14px;box-shadow:3px 3px 0 var(--ink);white-space:nowrap}
+.pill.sc{background:var(--yellow)}
+.bar{height:20px;background:#fff;border:3px solid var(--ink);border-radius:999px;overflow:hidden;margin-bottom:14px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--purple),var(--blue));border-right:3px solid var(--ink);transition:width .5s}
+.qhead{display:flex;align-items:center;gap:12px;text-align:left;margin-bottom:12px}
+.mascot{font-size:3.2rem;line-height:1;flex:none;animation:bob 2s ease-in-out infinite}
+.mascot.yay{animation:jump .6s}.mascot.oops{animation:shake .5s}
+@keyframes jump{0%,100%{transform:translateY(0)}40%{transform:translateY(-28px) scale(1.2)}}
+@keyframes shake{0%,100%{transform:none}25%{transform:translateX(-10px) rotate(-8deg)}75%{transform:translateX(10px) rotate(8deg)}}
+.cat{display:inline-block;background:var(--purple);border:2px solid var(--ink);border-radius:12px;padding:1px 10px;font-size:.85rem;font-weight:700}
+.q{font-size:clamp(1.25rem,5vw,1.6rem);font-weight:800;line-height:1.25;margin-top:4px}
+.opts{display:grid;gap:10px;margin-top:6px}
+.opt{font:inherit;font-weight:700;font-size:1.15rem;color:var(--ink);text-align:left;background:var(--blue);border:3px solid var(--ink);border-radius:18px;padding:12px 14px;cursor:pointer;box-shadow:0 4px 0 var(--ink);display:flex;gap:10px;align-items:center;transition:transform .1s}
+.opt:nth-child(2){background:var(--pink)}.opt:nth-child(3){background:var(--yellow)}.opt:nth-child(4){background:var(--purple)}
+.opt:not(:disabled):active{transform:translateY(3px)}
+.opt em{font-style:normal;background:#fff;border:2px solid var(--ink);border-radius:50%;width:32px;height:32px;display:grid;place-items:center;flex:none}
+.opt:disabled{cursor:default}
+.opt.right{background:#7fe39a;animation:jump .5s}
+.opt.wrong{background:var(--bad);animation:shake .4s}
+.opt:disabled:not(.right):not(.wrong){opacity:.55}
+.fb{min-height:64px;margin-top:12px;font-weight:800;font-size:1.2rem}
+.fb.ok{color:#18803a}.fb.no{color:#c43a3a}
+.fb small{display:block;font-weight:600;color:var(--ink);font-size:.95rem}
+.big-emoji{font-size:5rem;animation:jump 1.2s infinite}
+.score-num{font-size:4.2rem;font-weight:800;line-height:1}
+.score-num small{font-size:1.4rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+.stat{border:3px solid var(--ink);border-radius:16px;padding:8px 4px;font-weight:700;font-size:.9rem}
+.stat b{display:block;font-size:1.7rem}
+.stat:nth-child(1){background:var(--green)}.stat:nth-child(2){background:var(--bad)}.stat:nth-child(3){background:var(--yellow)}
+.msg{font-size:1.4rem;font-weight:800;margin:6px 0 10px}
+.conf{position:fixed;top:-20px;width:12px;height:16px;z-index:9;pointer-events:none;border:2px solid var(--ink);animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+.snd{position:fixed;right:12px;bottom:12px;z-index:10;font-size:1.4rem;width:48px;height:48px;border-radius:50%;padding:0;margin:0;display:grid;place-items:center}
+@media(max-width:420px){body{font-size:16px;padding:10px}.card{padding:16px 12px;box-shadow:6px 6px 0 var(--ink)}.mascot{font-size:2.6rem}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app">
+
+<section id="home" class="screen on">
+  <div class="card">
+    <div class="logo">🌈 Kuis Ceria</div>
+    <h1><span>Ayo</span> <span>Belajar</span> <span>Sambil</span> <span>Bermain!</span></h1>
+    <div class="crew" aria-hidden="true"><b>🐻</b><b>🐰</b><b>🐼</b><b>🦊</b></div>
+    <p class="desc">Halo teman-teman! Bersama Beruang, Kelinci, Panda, dan Rubah, yuk jawab soal Matematika, Bahasa Indonesia, IPA, Pengetahuan Umum, dan Bahasa Inggris. Seru dan gampang! ✨</p>
+    <div class="chips"><span class="chip">📝 20 Pertanyaan</span><span class="chip">⭐ 5 Poin / Soal</span><span class="chip">🏆 Nilai Maks 100</span></div>
+    <button class="btn big" id="startBtn">🚀 MULAI KUIS</button>
+    <div class="best" id="bestHome"></div>
+  </div>
+</section>
+
+<section id="quiz" class="screen">
+  <div class="card">
+    <div class="top"><span class="pill" id="num">1/20</span><span class="pill sc">⭐ Skor: <span id="score">0</span></span></div>
+    <div class="bar" role="progressbar" aria-label="Kemajuan kuis"><i id="prog"></i></div>
+    <div class="qhead">
+      <div class="mascot" id="mascot">🐻</div>
+      <div><span class="cat" id="cat"></span><div class="q" id="qtext"></div></div>
+    </div>
+    <div class="opts" id="opts"></div>
+    <div class="fb" id="fb" aria-live="polite"></div>
+    <button class="btn next" id="nextBtn" style="display:none">Soal Selanjutnya ➡️</button>
+  </div>
+</section>
+
+<section id="result" class="screen">
+  <div class="card">
+    <div class="big-emoji" id="rChar">🐻</div>
+    <div class="logo">Hasil Kuismu</div>
+    <div class="score-num" id="rScore">0<small>/100</small></div>
+    <div class="msg" id="rMsg"></div>
+    <div class="stats">
+      <div class="stat"><b id="rOk">0</b>✅ Benar</div>
+      <div class="stat"><b id="rBad">0</b>❌ Salah</div>
+      <div class="stat"><b id="rPct">0%</b>📊 Berhasil</div>
+    </div>
+    <div class="best" id="bestRes"></div>
+    <button class="btn" id="againBtn">🔁 ULANGI KUIS</button>
+    <button class="btn alt" id="menuBtn">🏠 KEMBALI KE MENU</button>
+  </div>
+</section>
+
+</div>
+<button class="btn alt snd" id="sndBtn" aria-label="Nyalakan atau matikan suara">🔊</button>
+
+<script>
+(function(){
+"use strict";
+// [kategori, soal, jawaban benar, salah1, salah2, salah3]
+var BANK=[
+["Matematika","Berapa hasil 7 × 8 ?","56","54","48","63"],
+["Matematika","Berapa hasil 125 + 76 ?","201","191","211","199"],
+["Matematika","Keliling persegi dengan sisi 6 cm adalah ...","24 cm","12 cm","36 cm","18 cm"],
+["Matematika","Berapa hasil 1/2 + 1/4 ?","3/4","2/6","1/6","2/4"],
+["Bahasa Indonesia","Lawan kata dari \"tinggi\" adalah ...","rendah","besar","panjang","jauh"],
+["Bahasa Indonesia","Kalimat tanya diakhiri dengan tanda ...","? (tanya)",". (titik)","! (seru)",", (koma)"],
+["Bahasa Indonesia","Manakah kata yang ditulis dengan baku?","Apotek","Apotik","Aptek","Apoteq"],
+["Bahasa Indonesia","Persamaan kata (sinonim) \"cantik\" adalah ...","indah","buruk","kecil","gelap"],
+["IPA","Hewan pemakan tumbuhan disebut ...","herbivora","karnivora","omnivora","insektivora"],
+["IPA","Planet yang paling dekat dengan Matahari adalah ...","Merkurius","Venus","Bumi","Mars"],
+["IPA","Air membeku pada suhu ...","0 °C","100 °C","50 °C","25 °C"],
+["IPA","Bagian tumbuhan yang menyerap air dari tanah adalah ...","akar","daun","bunga","batang"],
+["Pengetahuan Umum","Lambang negara Indonesia adalah ...","Garuda Pancasila","Singa","Banteng","Harimau"],
+["Pengetahuan Umum","Hari Kemerdekaan Indonesia diperingati setiap tanggal ...","17 Agustus","1 Juni","28 Oktober","10 November"],
+["Pengetahuan Umum","Hewan terbesar di dunia yang hidup di laut adalah ...","Paus biru","Hiu","Gurita","Lumba-lumba"],
+["Pengetahuan Umum","Alat musik bambu dari Jawa Barat adalah ...","Angklung","Sasando","Tifa","Kolintang"],
+["Bahasa Inggris","\"Apple\" artinya ...","apel","jeruk","pisang","anggur"],
+["Bahasa Inggris","\"Blue\" dalam bahasa Indonesia adalah warna ...","biru","merah","hijau","kuning"],
+["Bahasa Inggris","A cat has ... legs.","four","two","six","eight"],
+["Bahasa Inggris","\"Good morning\" artinya ...","selamat pagi","selamat malam","selamat siang","selamat tidur"]
+];
+var CAT_EMOJI={"Matematika":"🐻","Bahasa Indonesia":"🐰","IPA":"🐼","Pengetahuan Umum":"🦊","Bahasa Inggris":"🐻"};
+var CAT_ICON={"Matematika":"🔢","Bahasa Indonesia":"📚","IPA":"🔬","Pengetahuan Umum":"🌏","Bahasa Inggris":"🔤"};
+var CHEER_OK=["Hebat! 🎉","Luar biasa! 🌟","Pintar sekali! 👏","Keren! 😍","Mantap! 💪"];
+var CHEER_NO=["Ayo coba lagi di soal berikutnya! 💪","Tidak apa-apa, semangat! 🌈","Hampir benar, terus belajar ya! 📖"];
+var KEY="kuisCeriaBest",LETTERS=["A","B","C","D"];
+
+var $=function(id){return document.getElementById(id)};
+var qs,idx=0,correct=0,locked=false,muted=false,actx=null;
+
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function show(id){["home","quiz","result"].forEach(function(s){$(s).classList.toggle("on",s===id)});window.scrollTo(0,0)}
+
+function getBest(){try{var v=localStorage.getItem(KEY);return v===null?null:parseInt(v,10)}catch(e){return null}}
+function setBest(v){try{localStorage.setItem(KEY,String(v))}catch(e){}}
+function bestText(){var b=getBest();return b===null||isNaN(b)?"🏅 Skor terbaik: belum ada. Ayo jadi yang pertama!":"🏅 Skor terbaik kamu: "+b+"/100"}
+
+// Suara sederhana (WebAudio, tanpa file)
+function tone(f,d,t,delay){
+  if(muted)return;
+  try{
+    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    if(actx.state==="suspended")actx.resume();
+    var o=actx.createOscillator(),g=actx.createGain(),s=actx.currentTime+(delay||0);
+    o.type=t||"sine";o.frequency.value=f;
+    g.gain.setValueAtTime(.18,s);g.gain.exponentialRampToValueAtTime(.001,s+d);
+    o.connect(g);g.connect(actx.destination);o.start(s);o.stop(s+d);
+  }catch(e){}
+}
+function sndOk(){tone(660,.14,"triangle",0);tone(880,.14,"triangle",.12);tone(1175,.25,"triangle",.24)}
+function sndNo(){tone(300,.2,"sawtooth",0);tone(220,.3,"sawtooth",.18)}
+function sndWin(){[523,659,784,1047].forEach(function(f,i){tone(f,.25,"triangle",i*.14)})}
+
+function confetti(){
+  var cols=["#ff9ccc","#bfe3ff","#fff1a8","#c4f2cf","#dccbff"];
+  for(var i=0;i<45;i++){
+    var c=document.createElement("div");c.className="conf";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=pick(cols);
+    c.style.borderRadius=Math.random()>.5?"50%":"3px";
+    c.style.animationDuration=(2.2+Math.random()*2)+"s";
+    c.style.animationDelay=Math.random()*.8+"s";
+    document.body.appendChild(c);
+    setTimeout((function(el){return function(){el.remove()}})(c),5500);
+  }
+}
+
+function start(){
+  qs=shuffle(BANK).map(function(q){
+    var opts=shuffle(q.slice(2)); // acak posisi jawaban
+    return {cat:q[0],text:q[1],ans:q[2],opts:opts};
+  });
+  idx=0;correct=0;
+  show("quiz");render();
+}
+
+function render(){
+  var q=qs[idx];locked=false;
+  $("num").textContent=(idx+1)+"/20";
+  $("score").textContent=correct*5;
+  $("prog").style.width=(idx/20*100)+"%";
+  $("cat").textContent=CAT_ICON[q.cat]+" "+q.cat;
+  $("qtext").textContent=q.text;
+  var m=$("mascot");m.textContent=CAT_EMOJI[q.cat];m.className="mascot";
+  $("fb").textContent="";$("fb").className="fb";
+  $("nextBtn").style.display="none";
+  var box=$("opts");box.innerHTML="";
+  q.opts.forEach(function(o,i){
+    var b=document.createElement("button");
+    b.className="opt";b.type="button";
+    b.innerHTML="<em>"+LETTERS[i]+"</em><span></span>";
+    b.lastChild.textContent=o;
+    b.addEventListener("click",function(){answer(b,o)});
+    box.appendChild(b);
+  });
+}
+
+function answer(btn,val){
+  if(locked)return;locked=true; // hanya satu kali jawab
+  var q=qs[idx],ok=val===q.ans,m=$("mascot"),fb=$("fb");
+  var all=$("opts").children;
+  for(var i=0;i<all.length;i++){
+    all[i].disabled=true;
+    if(all[i].lastChild.textContent===q.ans)all[i].classList.add("right");
+  }
+  if(!ok)btn.classList.add("wrong");
+  if(ok){
+    correct++;$("score").textContent=correct*5;
+    fb.className="fb ok";fb.innerHTML=pick(CHEER_OK)+"<small>Jawabanmu benar! +5 poin</small>";
+    m.className="mascot yay";m.textContent="🤩";sndOk();
+  }else{
+    fb.className="fb no";fb.innerHTML=pick(CHEER_NO)+"<small></small>";
+    fb.lastChild.textContent="Jawaban yang benar: "+q.ans;
+    m.className="mascot oops";m.textContent="🥺";sndNo();
+  }
+  $("prog").style.width=((idx+1)/20*100)+"%";
+  var nb=$("nextBtn");
+  nb.textContent=idx===19?"Lihat Hasil 🏆":"Soal Selanjutnya ➡️";
+  nb.style.display="inline-block";
+  nb.focus({preventScroll:true});
+}
+
+function next(){
+  if(idx<19){idx++;render()}else finish();
+}
+
+function finish(){
+  var score=correct*5,wrong=20-correct,pct=Math.round(correct/20*100);
+  var msg,ch;
+  if(score>=90){msg="LUAR BIASA! Kamu Anak Hebat! 🏆";ch="🥳"}
+  else if(score>=70){msg="HEBAT! Terus tingkatkan kemampuanmu! 🌟";ch="😄"}
+  else if(score>=50){msg="BAGUS! Terus berlatih ya! 👍";ch="😊"}
+  else{msg="JANGAN MENYERAH! Kamu pasti bisa! 💪";ch="🤗"}
+  var pal=["🐻","🐰","🐼","🦊"];
+  $("rChar").textContent=pal[Math.floor(Math.random()*4)]+ch;
+  $("rScore").innerHTML=score+"<small>/100</small>";
+  $("rMsg").textContent=msg;
+  $("rOk").textContent=correct;$("rBad").textContent=wrong;$("rPct").textContent=pct+"%";
+  var b=getBest(),extra="";
+  if(b===null||isNaN(b)||score>b){setBest(score);extra=(b===null||isNaN(b))?"":" 🎊 Rekor baru!"}
+  $("bestRes").textContent=bestText()+extra;
+  show("result");
+  if(score>=70){confetti();sndWin();setTimeout(confetti,1200)}
+}
+
+function menu(){$("bestHome").textContent=bestText();show("home")}
+
+$("startBtn").addEventListener("click",start);
+$("nextBtn").addEventListener("click",next);
+$("againBtn").addEventListener("click",start);
+$("menuBtn").addEventListener("click",menu);
+$("sndBtn").addEventListener("click",function(){
+  muted=!muted;this.textContent=muted?"🔇":"🔊";
+  if(!muted)tone(880,.12,"triangle",0);
+});
+$("bestHome").textContent=bestText();
+})();
+</script>
+</body>
+</html>
